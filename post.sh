@@ -35,9 +35,9 @@ else
 			 23 "Docker-Compose" off
 			 24 "Plex Media Server" off
 			 25 "Filebot (Install the license file thru Software & Update/Authentification" off
-			 26 "Webpack" off
-			 27 "Grunt" off
-			 28 "Gulp" off)
+			 26 "Nvidia Latest Drivers" off
+			 27 "RetroArch" off
+			 28 "Lutris" off)
 		choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 		clear
 		for choice in $choices
@@ -217,16 +217,25 @@ else
 				bash -xu <<< "$(curl -fsSL https://raw.githubusercontent.com/filebot/plugins/master/installer/deb.sh)"
 				;;
 			26)
-				echo "Installing Webpack"
-				npm install webpack -g
+				#Nividia latest drivers
+				echo "Installing Nvidia PPA"
+				sudo add-apt-repository ppa:graphics-drivers/ppa
+				sudo apt update
+				echo "Installing latest Nvidia drivers (Need Reboot After)"
+				sudo ubuntu-drivers autoinstall
 				;;
 			27)
-				echo "Installing Grunt"
-				npm install grunt -g
+				#Retroarch
+				echo "Installing Retroarch"
+				sudo add-apt-repository ppa:libretro/stable && sudo apt-get update && sudo apt-get install retroarch*
 				;;
 			28)
-				echo "Installing Gulp"
-				npm install gulp -g
+				#Lutris
+				echo "Installing Lutris PPA"
+				sudo add-apt-repository ppa:lutris-team/lutris
+				sudo apt update
+				echo "Installing Lutris"
+				sudo apt-get install lutris
 				;;
 	    esac
 	done
